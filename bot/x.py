@@ -156,8 +156,7 @@ def helpmessage():
 ╠✪〘 Other 〙✪════
 ╠➥ Say [text times] 重複講話
 ╠➥ Tag @ [times] 重複標人
-╠➥ Loli 抽蘿莉圖 (維護中)
-╠➥ 笑死 抽梗圖
+╠➥ Loli 抽蘿莉圖
 ╚═〘 製作者：邊緣工作室™ 〙"""
     return helpMessage
 def helpm():
@@ -202,8 +201,7 @@ def helpm():
 ╠➥ Adminlist 查看權限表
 ╠➥ Banlist 查看黑單
 ╠➥ Banmidlist 查看黑單者mid
-╠➥ Loli 抽蘿莉圖(維護中)
-╠➥ 笑死 抽梗圖
+╠➥ Loli 抽蘿莉圖
 ╚═〘 製作者：邊緣工作室™ 〙"""
     return helpM
 wait = {
@@ -255,7 +253,7 @@ def lineBot(op):
                 group = cl.getGroup(op.param1)
                 if op.param2 in ban["admin"] or op.param2 in ban["owners"]:
                     cl.acceptGroupInvitation(op.param1)
-                    sendMention(op.param1, "",[op.param2])
+                    sendMention(op.param1, "權限者 @! 邀請入群",[op.param2])
                 else:
                     cl.acceptGroupInvitation(op.param1)
                     sendMention(op.param1, "@! 你不是權限者",[op.param2])
@@ -273,7 +271,7 @@ def lineBot(op):
                                 sleep(0.2)
                                 cl.kickoutFromGroup(op.param1,[op.param3])
                     else:
-                        sendMention(op.param1, "",[op.param2])
+                        sendMention(op.param1, "警告 @! 試圖邀請多個人,但是基於限制無法取消QQ",[op.param2])
             else:
                 gInviMids = []
                 for z in op.param3:
@@ -291,7 +289,8 @@ def lineBot(op):
                 cl.sendMessage(op.param1,"Blacklist user joined...")
             if op.param1 in settings["mention"]:
                 name = str(cl.getGroup(op.param1).name)
-                sendMention(op.param1,"你好 @! \n\n🔸進群請先看相簿重要事宜！本群服務時間為週一～週日，早上7:00-晚上11:30，謝謝。\n\n🔸闆闆平常白天在忙碌，期間如有問題，請直接私密即可，沒有馬上回復代表在忙碌，感謝！\n\n🔸商品拍攝難免有色差問題，一律以實品為主，本群嚴🈲完美主義、跑單者，如跑單一律踢除，永不加回！\n\n🔸請勿更改群組內的設定，如被機器人踢出，是不給予加回來的唷，請多多配合唷\n\n官方Line@為:@352mclxi\n\n⚠本群唯一匯款銀行都是台新商業銀行，如有收到非台新商業銀行的帳號，請一定一定要私密 Yuan 問清楚唷！⚠ \n\n本群闆闆為 👉 Yuan\n\n小幫手為 👉華\n\n闆闆線上沒有回覆，請詢問小幫手唷!\n\n💎LowPrice 批發零售群💎敬上，謝謝各位的支持。",[op.param2])
+                sendMention(op.param1, "嗨 @! ❤️歡迎新進的賺錢夥伴。\n\n請務必遵守以下規則，否則闆娘會請你在外自力更生🤣🤣並黑單\n\n1⃣️：尊重自己及別人\n2⃣️：請勿騷擾群裡的成員\n3⃣️ ：維護群組價格及成員，不得擅自外洩群組任何資料\n4⃣️：請勿在群組記事本內發任何一篇文章\n5⃣️⚠️：不得踢出任何一位成員跟機器人、管理員，不然你會飛到火星我都救不回來🤣,[op.param2])
+                sendMessage(op.param1, None, contentMetadata={'mid': 'ub6f9d53713c5869f0d78e71febe13837'}, contentType=13)
         if op.type == 24 or op.type == 21 or op.type ==22:
             if settings["autoLeave"] == True:
                 cl.leaveRoom(op.param1)
@@ -324,16 +323,16 @@ def lineBot(op):
                     cl.sendMessage(to,"您可以輸入loli以獲得更多的蘿莉~")
             if sender not in ban["blacklist"]:
                 if text.lower() in ['妹子圖','抽妹子'] :
-                    cl.sendImage(to, "bot/linepy/loli/{}-open.png".format(str(random.randint(0,int(settings["monmonpic"]-1)))))
+                    cl.sendImage(to, "bot/linepy/loli/{}-monmon.png".format(str(random.randint(0,int(settings["monmonpic"]-1)))))
                 elif text.lower() in ['loli','抽蘿莉'] :
                     cl.sendImage(to, "bot/linepy/loli/{}-image.png".format(str(random.randint(0,int(settings["pic"]-1)))))
             if sender in ban["admin"] or sender in ban["owners"]:
-                if text.lower() in ['speed','sp','速度']:
+                if text.lower() in ['speed','sp']:
                     cl.sendMessage(to,"緩慢的測速中...\n結果約為"+str(timeit.timeit('"-".join(str(n) for n in range(100))',number=1000)) + "秒")
-                elif text.lower() == "保存":
+                elif text.lower() == 'save':
                     backupData()
                     cl.sendMessage(to,"儲存設定成功!")
-                elif text.lower() == "刷新":
+                elif text.lower() == 'runtime':
                     cl.sendMessage(to, "系統已運作 {}".format(str(format_timespan(time.time() - botStart))))
                 elif text.lower() == 'about':
                     ret_ = "╔══[ 關於使用者 ]"
@@ -348,7 +347,7 @@ def lineBot(op):
                     ret_ += "\n╠ 擁有者 : 邊緣工作室"
                     ret_ += "\n╚══[ 感謝您的使用 ]"
                     cl.sendMessage(to, str(ret_))
-                elif text.lower() == "查看設定":
+                elif text.lower() == 'set':
                     try:
                         ret_ = "╔══[ 本機設定 ]"
                         if settings["autoAdd"] == True: ret_ += "\n╠ 自動加入好友 ✅"
@@ -609,7 +608,7 @@ def lineBot(op):
                         ret_ += "\n╚══[ 共 {} 群 ]".format(str(no))
                         cl.sendMessage(to, str(ret_))
 #==============================================================================#
-                elif text.lower() == '標註':
+                elif text.lower() == '全體起床':
                     group = cl.getGroup(msg.to)
                     nama = [contact.mid for contact in group.members]
                     k = len(nama)//20
@@ -652,8 +651,8 @@ def lineBot(op):
                         cl.updateGroup(X)
                     else:
                         cl.sendMessage(msg.to,"It can't be used besides the group.")
-                elif text.lower() in ['setread','sr',"設定已讀點","設定已讀"]:
-                    cl.sendMessage(msg.to, "讀取點已設置")
+                elif text.lower() in ['setread','sr',"設定已讀點"]:
+                    cl.sendMessage(msg.to, "讀取點已設置。 \ n如果要查看，請輸入“已讀”。")
                     try:
                         del wait2['readPoint'][msg.to]
                         del wait2['readMember'][msg.to]
@@ -664,7 +663,7 @@ def lineBot(op):
                     wait2['readMember'][msg.to] = ""
                     wait2['setTime'][msg.to] = datetime.strftime(now2,"%H:%M")
                     wait2['ROM'][msg.to] = {}
-                elif text.lower() in ['cancelread','cr',"刪除已讀"]:
+                elif text.lower() in ['cancelread','cr']:
                     cl.sendMessage(to, "已讀點已刪除")
                     try:
                         del wait2['readPoint'][msg.to]
@@ -736,16 +735,16 @@ def lineBot(op):
                 elif text.lower() == 'bomb':
                     cl.sendContact(to,"\'")
                 elif text.lower() in ["さようなら",'bye']:
-                    cl.sendMessage(msg.to, "確定要我離開嗎?\n(y/n)")
+                    cl.sendMessage(msg.to, "考え直して頂けませんか...?\n(y/n)")
                     wait['bye'][msg.to] = sender
                 elif text.lower() in ["Y","y","おk","N","n","だめ"]:
                     if msg._from== wait['bye'][msg.to]:
                         if text.lower() in ["いいよ",'y']:
-                            cl.sendMessage(msg.to, "我離開了群組...")
+                            cl.sendMessage(msg.to, "分かりました...")
                             cl.leaveGroup(msg.to)
                             del wait['bye'][msg.to]
                         elif text.lower() in ['n',"だめ"]:
-                            cl.sendMessage(msg.to, "我知道你是愛我的")
+                            cl.sendMessage(msg.to, "考え直して頂けたようですね。ありがとうございます。")
                             del wait['bye'][msg.to]
                     else:
                         pass
@@ -971,7 +970,7 @@ def lineBot(op):
                         targets.append(x["M"])
                     for target in targets:
                         try:
-                            cl.sendMessage(to,"踢出幽靈中")
+                            cl.sendMessage(to,"Fuck you")
                             cl.kickoutFromGroup(msg.to,[target])
                         except:
                             cl.sendMessage(to,"Error")
